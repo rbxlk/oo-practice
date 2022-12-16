@@ -1,8 +1,20 @@
 import { Car } from "./classes/car.js";
 import { Drone } from "./classes/drone.js";
+import { fleet } from "./fleet-data.js";
+import { FleetDataService } from "./services/fleet-data-service.js";
 
-let c = new Car();
-let d = new Drone();
+let dataService = new FleetDataService();
+dataService.loadData(fleet);
 
-console.log(c);
-console.log(d);
+let car = dataService.getCarByLicense('AT9900');
+console.log(car);
+
+let carFilter = dataService.filterCarsByMake('U');
+carFilter.forEach(car => {
+    console.log(car.make)
+});
+
+let cars = dataService.getCarsSortedByLicense();
+for (const car of cars) {
+    console.log(car.license);
+}
